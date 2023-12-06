@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "adventofcode"
+version = "0.1.0"
+description = "Practicing Python with Advent of Code quests, having fun"
+authors = ["Julia Shilkova <yulia.shikova@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+argparse = "^1.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
