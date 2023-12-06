@@ -32,9 +32,6 @@ def main():
 
             card_number += 1
 
-        for i in range(len(card_count), card_number-1):
-            card_count.extend([1])
-
         card_count = card_count[:card_number-1]
 
         final_number = sum(card_count)
