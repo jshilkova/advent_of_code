@@ -14,16 +14,13 @@ def get_instructions_and_network():
         network = {}
         for line in f:
             key, value = line.split('=')
-            node1, node2 = value.strip()[1:-1].split(',')
-            network[key.strip()] = [node1, node2.strip()]
+            node1, node2 = value.strip()[1:-1].split(', ')
+            network[key.strip()] = [node1, node2]
     return instructions, network
 
 
 def get_starting_points(network):
-    starting_points = []
-    for node in network:
-        if node[2] == 'A':
-            starting_points.append(node)
+    starting_points = [node for node in network if node[2] == 'A']
     return starting_points
 
 
