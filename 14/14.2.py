@@ -9,7 +9,7 @@ def get_field():
     args = parser.parse_args()
 
     with Path(args.path).open() as f:
-        field = list(map(lambda x: list(x), f.read().split('\n')))
+        field = tuple(map(lambda x: list(x), f.read().split('\n')))
     return field
 
 
@@ -51,7 +51,7 @@ def make_cycle(field):
     for i in range(4):
         roll_stones_north(field)
         field = field[::-1]
-        field = [list(x) for x in zip(*field)]
+        field = tuple(list(x) for x in zip(*field))
     return field
 
 
@@ -65,12 +65,11 @@ def main():
         field = make_cycle(field)
         if field in seen:
             break
-        else:
-            seen.append(copy.deepcopy(field))
+        seen.append(copy.deepcopy(field))
         i += 1
-    first_occurance = seen.index(field)
-    print(first_occurance, i)
-    field = seen[first_occurance + (1000000000 - first_occurance) % (i - first_occurance)]
+    first_occurrence = seen.index(field)
+    print(first_occurrence, i)
+    field = seen[first_occurrence + (1000000000 - first_occurrence) % (i - first_occurrence)]
 
     final_number = 0
     for i in range(0, len(field)):
