@@ -21,41 +21,36 @@ def get_hash(string):
     return val
 
 
-def process_lens(string, boxes, indexes):
+def process_lens(string, boxes, focal_lengths):
     if '-' in string:
         label = string[:-1]
-        box = get_hash(label)
-        if label in indexes[box]:
-            removed_lens_index = indexes[box][label]
-            del boxes[box][removed_lens_index]
-            del indexes[box][label]
-            for k, v in indexes[box].items():
-                if v > removed_lens_index:
-                    indexes[box][k] = v - 1
+        box_index = get_hash(label)
+        if label in boxes[box_index]:
+            boxes[box_index].remove(label)
     elif '=' in string:
         label = string[:-2]
-        box = get_hash(label)
+        box_index = get_hash(label)
         focal_length = string.split('=')[1]
-        if label in indexes[box]:
-            boxes[box][indexes[box][label]] = [label, focal_length]
+        if label in boxes[box_index]:
+            focal_lengths[label] = int(focal_length)
         else:
-            boxes[box].append([label, focal_length])
-            indexes[box][label] = boxes[box].index([label, focal_length])
+            boxes[box_index].append(label)
+            focal_lengths[label] = int(focal_length)
     return boxes
 
 
 def main():
     strings = get_strings()
     boxes = [[] for _x in range(256)]
-    indexes = [{} for _x in range(256)]
+    focal_lengths = {}
 
     for line in strings:
-        process_lens(line, boxes, indexes)
+        process_lens(line, boxes, focal_lengths)
 
     final_number = 0
-    for i, box in enumerate(boxes):
-        for j, lens in enumerate(box):
-            final_number += (i + 1) * (j + 1) * int(lens[1])
+    for i, box in enumerate(boxes, 1):
+        for j, label in enumerate(box, 1):
+            final_number += i * j * focal_lengths[label]
     print(final_number)
 
 
