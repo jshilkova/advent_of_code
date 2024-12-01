@@ -3,7 +3,6 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
-from day10 import aoc10_2
 
 
 def get_dig_plan0():
